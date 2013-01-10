@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <title>The Good Suite Sample Forum</title>
+  </head>
+  <body>
+    <header>
+	  <h1><a href='.'>The Good Suite Sample Forum</a></h1>
+	</header>
+	<h2>Log in</h2>
+	
+	<: if (failedLogin) :>
+	  <p>Incorrect username/password combination. Please try again.</p>
+	<: end if :>
+	
+	<form method='POST' action='doLogin.php'>
+	  <label for='username'>Username: </label><input type='text' name='username' />
+	  <label for='password'>Password: </label><input type='password' name='password' />
+	  <input type='submit' value='Log in!' />
+	</form>
+	
+  </body>
+</html>

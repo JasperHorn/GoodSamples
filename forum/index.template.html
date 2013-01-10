@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <title>The Good Suite Sample Forum</title>
+  </head>
+  <body>
+    <header>
+	  <h1><a href='.'>The Good Suite Sample Forum</a></h1>
+	  <: if (loggedIn) :>
+		<p>Hello <: username :>. <a href='logout.php'>Log out.</a></p>
+	  <: else :>
+	    <a href='login.php'>Log in</a>
+	  <: end if :>
+	</header>
+    
+	<: foreach (forum in fora) :>
+	  <div>
+	    <a href='viewforum.php?id=<: forum["id"] :>'><: forum['name'] :></a>
+      </div>
+	<: end foreach :>
+  </body>
+</html>

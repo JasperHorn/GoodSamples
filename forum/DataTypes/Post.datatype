@@ -1,0 +1,4 @@
+[]		"Topic"		topic
+[]		"User"		poster
+[]		text		message
+[]		datetime    timePosted

@@ -1,0 +1,4 @@
+[]		"Forum"		forum
+[]		text		title
+[]		"User"		topicStarter
+[]		datetime	timeLastMessage

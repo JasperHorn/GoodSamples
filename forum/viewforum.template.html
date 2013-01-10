@@ -1,0 +1,34 @@
+<html>
+  <head>
+    <title><: forum['name'] :> :: The Good Suite Sample Forum</title>
+  </head>
+  <body>
+    <header>
+	  <h1><a href='.'>The Good Suite Sample Forum</a></h1>
+	  <: if (loggedIn) :>
+		<p>Hello <: username :>. <a href='logout.php'>Log out.</a></p>
+	  <: else :>
+	    <a href='login.php'>Log in</a>
+	  <: end if :>
+	</header>
+	<h2><: forum['name'] :></h2>
+	
+	<: foreach (topic in topics) :>
+	  <div>
+	    <a href='viewtopic.php?id=<: topic['id'] :>'><: topic['title'] :></a> -- by 
+				<: topic['topicStarter']['username'] :>, last message: <: topic['timeLastMessage'] :>
+	  </div>
+	<: end foreach :>
+	
+	<: if (loggedIn) :>
+	  <form method="POST" action='posttopic.php'>
+	    <h3>Start a new topic</h3>
+		<label for='title'>Title: </label><input type='text' name='title' />
+	    <textarea name='message'></textarea>
+		<input type='hidden' name='forum' value='<: forum['id'] :>' />
+		<input type='submit' value='Post!' />
+	  </form>
+	<: end if :>
+	
+  </body>
+</html>
