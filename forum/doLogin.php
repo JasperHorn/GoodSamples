@@ -8,7 +8,7 @@ $user = User::login($store, $_POST['username'], $_POST['password']);
 
 if ($user == null)
 {
-	$goodLooking = new GoodLooking('login.template.html');
+	$goodLooking = new \Good\Looking\Looking('login.template.html');
 
 	$goodLooking->registerVar('failedLogin', true);
 	

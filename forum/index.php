@@ -2,7 +2,7 @@
 
 require_once 'bootstrap.php';
 
-$goodLooking = new GoodLooking('index.template.html');
+$goodLooking = new \Good\Looking\Looking('index.template.html');
 
 require 'sessionUser.php';
 

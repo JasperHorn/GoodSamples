@@ -7,13 +7,13 @@
 
 require 'settings.php';
 
-include_once $good_dir . 'Rolemodel/GoodRolemodel.php';
+include_once $good_dir . 'Rolemodel/Rolemodel.php';
 include_once $good_dir . 'Service/ModifierObservable.php';
 include_once $good_dir . 'Manners/ModifierStorable.php';
-include_once $good_dir . 'Service/GoodService.php';
+include_once $good_dir . 'Service/Service.php';
 include_once $good_dir . 'Service/Observer.php';
-include_once $good_dir . 'Manners/GoodManners.php';
-include_once $good_dir . 'Memory/GoodMemory.php';
+include_once $good_dir . 'Manners/Manners.php';
+include_once $good_dir . 'Memory/Memory.php';
 include_once $good_dir . 'temptools/LookingWithMannersCompiler.php';
 
 function class2file($in)
@@ -24,26 +24,26 @@ function class2file($in)
 
 
 
-$rolemodel = new GoodRolemodel();
+$rolemodel = new \Good\Rolemodel\Rolemodel();
 
 $model = $rolemodel->createDataModel(array_combine($datatypes, array_map("class2file", $datatypes)));
 
-$modifiers = array(new GoodServiceModifierObservable(),
-				   new GoodMannersModifierStorable());
+$modifiers = array(new \Good\Service\ModifierObservable(),
+				   new \Good\Manners\ModifierStorable());
 
-$service = new GoodService();
+$service = new \Good\Service\Service();
 
 $service->compile($modifiers, $model, 'compiled/');
 
-$manners = new GoodManners();
+$manners = new \Good\Manners\Manners();
 
 $manners->compileStore($model, 'compiled/');
 
-$memory = new GoodMemory();
+$memory = new \Good\Memory\Memory();
 
 $memory->compileSQLStore($model, 'compiled/');
 
-$memory = new LookingWithMannersCompiler();
+$memory = new \temptools\LookingWithMannersCompiler();
 
 $memory->compile($model, 'compiled/');
 

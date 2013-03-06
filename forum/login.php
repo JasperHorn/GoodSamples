@@ -2,7 +2,7 @@
 
 require_once 'bootstrap.php';
 
-$goodLooking = new GoodLooking('login.template.html');
+$goodLooking = new \Good\Looking\Looking('login.template.html');
 
 $goodLooking->registerVar('failedLogin', false);
 

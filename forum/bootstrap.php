@@ -12,10 +12,9 @@ require 'settings.php';
 
 date_default_timezone_set($timezone);
 
-require_once $good_dir . 'Good.php';
-require_once $good_dir . 'Memory/Database/DbMySQL.php';
-require_once $good_dir . 'Service/GoodService.php';
-require_once $good_dir . 'Looking/GoodLooking.php';
+include($good_dir . 'autoload.php');
+
+$good = new \Good\Good();
 
 require_once $compiled_dir . 'Store.php';
 require_once $compiled_dir . 'SQLStore.php';
@@ -32,9 +31,9 @@ require_once 'DataSubClasses/User.php';
 
 // ** end of included Storable subclasses **//
 
-$service = new GoodService();
+$service = new \Good\Service\Service();
 $service->requireClasses($datatypes);
 
-$store = new GoodMemorySQLStore(new GoodMemoryDbMySQL($dbname, $dbhost, $dbport, $dbuser, $dbpass, ''));
+$store = new GoodMemorySQLStore(new \Good\Memory\Database\MySQL($dbname, $dbhost, $dbport, $dbuser, $dbpass, ''));
 
 ?>
