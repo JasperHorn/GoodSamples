@@ -6,15 +6,7 @@
 // manually
 
 require 'settings.php';
-
-include_once $good_dir . 'Rolemodel/Rolemodel.php';
-include_once $good_dir . 'Service/ModifierObservable.php';
-include_once $good_dir . 'Manners/ModifierStorable.php';
-include_once $good_dir . 'Service/Service.php';
-include_once $good_dir . 'Service/Observer.php';
-include_once $good_dir . 'Manners/Manners.php';
-include_once $good_dir . 'Memory/Memory.php';
-include_once $good_dir . 'temptools/LookingWithMannersCompiler.php';
+include ($good_dir . 'autoload.php');
 
 function class2file($in)
 {
@@ -22,29 +14,15 @@ function class2file($in)
 	return $datatype_dir . $in . '.datatype';
 }
 
-
-
 $rolemodel = new \Good\Rolemodel\Rolemodel();
 
-$model = $rolemodel->createDataModel(array_combine($datatypes, array_map("class2file", $datatypes)));
+$model = $rolemodel->createSchema(array_combine($datatypes, array_map("class2file", $datatypes)));
 
-$modifiers = array(new \Good\Service\ModifierObservable(),
-				   new \Good\Manners\ModifierStorable());
+$modifiers = array(new \Good\Service\Modifier\Observable(),
+				   new \Good\Manners\Modifier\Storable());
 
 $service = new \Good\Service\Service();
 
 $service->compile($modifiers, $model, 'compiled/');
-
-$manners = new \Good\Manners\Manners();
-
-$manners->compileStore($model, 'compiled/');
-
-$memory = new \Good\Memory\Memory();
-
-$memory->compileSQLStore($model, 'compiled/');
-
-$memory = new \temptools\LookingWithMannersCompiler();
-
-$memory->compile($model, 'compiled/');
 
 ?>
