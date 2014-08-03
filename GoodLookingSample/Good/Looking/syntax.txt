@@ -1,0 +1,101 @@
+
+Script and comment tags
+
+- Code is "<:" and ":>" (obviously, there's not quotes)
+- Comments are between "<:-" and "-:>" (again, no quotes)
+- Comments can be inside or outside code tags
+
+Code
+
+- Code consists of expressions and control structures.
+- Expressions are closed off by either a semicolon (;)
+  or the end of a code block (:>)
+- Control structures consists of:
+  - an "opener", which is closed by a colon (:)
+  - a body of a mix of zero or more other expressions, 
+    direct text (between ":>" and "<:"...) and further 
+    control structures.
+  - the matching "closer" followed by a semicolon (;)
+
+Expressions
+
+- The value of an expression used at the top level will be
+  escaped and then printed to the output.
+- Each expression is either a single term or a a number of terms
+  with operators between them
+- A term is one of:
+  - an exprression between brackets ('(' and ')')
+  - a call to a function, in the form of: 
+    "functionname(argument)" where arguments is a comma-seperated
+    list of of expressions
+  - A literal:
+    - Integer (e.g. 12331)
+    - Float (e.g. 546.456)
+    - String (e.g. "bla" or 'asdas')
+    - Boolean (true or false, case insensitive)
+  - A variable:
+    - consisting of a dollar sign ($) one letter and one or more
+      letters and/or numbers
+    - a variable will evaluate to the value it was registered with
+      by the php code that requested this template to be parsed or
+      to the current value assigned to it by a control structure
+
+Functions
+
+- No functions have been implemented yet, so it's not yet valid 
+  to use them
+- Quite a number of function are planned, but the some of the 
+  most urgent ones are:
+  - include() (what's the value of a template system without it?)
+  - noEscape() (print things to the output without escaping)
+
+Operators
+
+- The available operators are:
+  - + (addition)
+  - - (subtraction)
+  - * (multiplication)
+  - / (division)
+  - % (modulus)
+  - . (concatenation)
+  - == (type insensitive equality)
+  - === (type sensitive equality)
+  - != (type insensitive inequality)
+  - !== (type sensitive inequality)
+  - > (greater than)
+  - < (less than)
+  - <= (less or equal)
+  - >= (greater or equal)
+  - && (logical and)
+  - and (alternative logical and)
+  - || (logical or)
+  - or (alternative logical or)
+  - xor (logical exclusive or)
+- the unary operator logical not (!) is planned, but not implemented
+  if you need it now, you can use "!= true" instead
+
+Control Structures:
+
+The control structures are:
+	- if (condition): {body} endif;
+      {body} will be if the expression condition evaluates to true
+      
+	- foreach(array as $varName): {body} endforeach;
+      {body} will be executed once for each element in the collection
+      (arrray or Traversable) - $varName will take the value of one of
+      the elements in the collection each time, following the order of
+      the collection
+      
+	- forrange(beginValue --> endValue) {body} endforrange;
+      {body} will be executed once for beginValue, once for
+      endValue and once for each integer in between.
+      Both beginValue and endValue are expressions which will
+      be casted to integers.
+      
+    - forrange(beginValue --> endValue as $var) {body} endforrange;
+      behaves like the previous entry, but also has $var take the
+      values in the range (starting as beginValue, decreasing one
+      each time if endValue is lower than beginValue and increasing
+      once each time if endValue is higher than beginValue)
+      $var will take the number of elements in the range after the
+      loop is done
