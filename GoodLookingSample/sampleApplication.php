@@ -3,20 +3,13 @@ $logged_in = false;
 $loginpage = true;
 $name = 'Unknown';
 $title = 'Sample application for GoodLooking';
-$mainText = 'Welcome to the sample application for this GoodLooking, my very own
-Templating System. This sample application was first made (together with its template
-just after the very first version of the Templating System was finished (INT01),
-which was not even a release yet. <br />
-The current version is INT02, which is not even a release either. The application is 
-just a couple of variables given constant values and then being registered with the 
-templating engine (I am currently typing this in one of these variables). However, it was
-made to match the sample template that was written long before the system ran. Anyway,
-when INT01 was made, but any time now just the same, I need to check if things work as
-they should, so I made this application for that purpose. <br />
-I did not modify the application between INT01 and INT02 (except changing this text) and
-I made only minor changes to the template. Such changes include changing a zero to one,
-that was just wrong in the first place and changing the order in an addition, as that
-would raise complications I had to solve.';
+$mainText = 'Welcome to the sample application for this GoodLooking, templating system
+of the Good Suite. This application was made before the templating syste m actually 
+existed. It served as goal for the system to move towards. It ended up changing quite
+a bit when the choice was made to move the language closer to PHP, but it still stands
+strong as a monument to the design of the system. And though I wouldn\'t consider this
+to be a particularly good example of what Good Looking can do, it\'s still a working
+demo.';
 
 $newspapers[0][0]['name'] = "Save the world Today";
 $newspapers[0][0]['date'] = "Today";
