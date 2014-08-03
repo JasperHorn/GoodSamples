@@ -8,17 +8,26 @@ $now = new DateTime();
 
 $post = new Post();
 $post->setMessage($_POST['message']);
-$post->setTopic(Topic::createDummy($_POST['topic']));
-$post->setPoster(User::createDummy($_SESSION['userId']));
+// NOTE: setId() is not public API! Should be changed when a proper replacement 
+// for this is added to the public API
+$t = new Topic();
+$t->setId($_POST['topic']);
+$post->setTopic($t);
+// NOTE: setId() is not public API! Should be changed when a proper replacement 
+// for this is added to the public API
+$p = new MyUser();
+$p->setId($_SESSION['userId']);
+$post->setPoster($p);
 $post->setTimePosted($now);
 
-$store->insertPost($post);
+$storage->insert($post);
 
-// This $topic bit can be made loads and loads better when
-// the planned syntactic sugar is there
-$topic = Topic::createDummy($_POST['topic']);
-$correctTopic = $store->createEqualityCondition($topic);
-$topics = $store->getTopicCollection($correctTopic, Topic::resolver());
+// NOTE: setId() is not public API! Should be changed when a proper replacement 
+// for this is added to the public API
+$topic = new Topic();
+$topic->setId($_POST['topic']);
+$correctTopic = new \Good\Manners\Condition\EqualTo($topic);
+$topics = $storage->getCollection($correctTopic, Topic::resolver());
 
 if ($fullTopic = $topics->getNext())
 {

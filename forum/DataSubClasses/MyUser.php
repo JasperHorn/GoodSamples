@@ -7,14 +7,14 @@ class MyUser extends User
 		$this->setPassword('');
 	}
 	
-	public static function login($store, $username, $password)
+	public static function login($storage, $username, $password)
 	{
-		$user = new User();
+		$user = new MyUser();
 		$user->setUsername($username);
 		$user->setPassword($password);
 		
-		$isUser = $store->createEqualityCondition($user);
-		$users = $store->getUserCollection($isUser, User::resolver());
+		$isUser = new \Good\Manners\Condition\EqualTo($user);
+		$users = $storage->getCollection($isUser, User::resolver());
 		
 		// In the future I should add a check to prevent two users showing up,
 		// but that's not trivial at the moment, so I'll leave it out for now

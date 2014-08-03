@@ -4,7 +4,7 @@ require 'bootstrap.php';
 
 session_start();
 
-$user = User::login($store, $_POST['username'], $_POST['password']);
+$user = MyUser::login($storage, $_POST['username'], $_POST['password']);
 
 if ($user == null)
 {

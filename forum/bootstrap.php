@@ -16,11 +16,15 @@ date_default_timezone_set($timezone);
 $service = new \Good\Service\Service();
 $storage = new \Good\Memory\SQLStorage(new \Good\Memory\Database\MySQL($dbname, $dbhost, $dbport, $dbuser, $dbpass, ''));
 
-// include generated datatype classes
+// include generated classes
 require_once 'compiled/Forum.datatype.php';
 require_once 'compiled/Topic.datatype.php';
 require_once 'compiled/Post.datatype.php';
 require_once 'compiled/User.datatype.php';
+require_once 'compiled/ForumResolver.php';
+require_once 'compiled/TopicResolver.php';
+require_once 'compiled/PostResolver.php';
+require_once 'compiled/UserResolver.php';
 
 // ** register Storable subclasses here    ** //
 

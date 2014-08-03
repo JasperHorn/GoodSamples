@@ -13,11 +13,11 @@ require 'sessionUser.php';
 // forum is possible.
 $forbiddenForum = new Forum();
 $forbiddenForum->setName("forbiddenForum");
-$notForbiddenForum = $store->createInequalityCondition($forbiddenForum);
+$notForbiddenForum = new \Good\Manners\Condition\NotEqualTo($forbiddenForum);
 
 
-$fora = $store->getForumCollection($notForbiddenForum, Forum::resolver());
-$goodLooking->registerVar('fora', parseForumCollection($fora));
+$fora = $storage->getCollection($notForbiddenForum, Forum::resolver());
+$goodLooking->registerVar('fora', $fora);
 
 
 $goodLooking->display();

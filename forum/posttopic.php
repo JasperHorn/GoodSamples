@@ -8,20 +8,32 @@ $now = new DateTime();
 
 $topic = new Topic();
 $topic->setTitle($_POST['title']);
-$topic->setForum(Forum::createDummy($_POST['forum']));
-$topic->setTopicStarter(User::createDummy($_SESSION['userId']));
+// NOTE: setId() is not public API! Should be changed when a proper replacement 
+// for this is added to the public API
+$f = new Forum();
+$f->setId($_POST['forum']);
+$topic->setForum($f);
+// NOTE: setId() is not public API! Should be changed when a proper replacement 
+// for this is added to the public API
+$u = new MyUser();
+$u->setId($_SESSION['userId']);
+$topic->setTopicStarter($u);
 $topic->setTimeLastMessage($now);
 
 $post = new Post();
 $post->setMessage($_POST['message']);
-$post->setPoster(User::createDummy($_SESSION['userId']));
+// NOTE: setId() is not public API! Should be changed when a proper replacement 
+// for this is added to the public API
+$u = new MyUser();
+$u->setId($_SESSION['userId']);
+$post->setPoster($u);
 $post->setTopic($topic);
 $post->setTimePosted($now);
 
-$store->insertPost($post);
+$storage->insert($post);
 
 // this should be made unnecessary
-$store->flush();
+$storage->flush();
 
 $_GET['id'] = $topic->getId();
 require 'viewtopic.php';

@@ -6,30 +6,31 @@ $goodLooking = new \Good\Looking\Looking('viewtopic.template.html');
 
 require 'sessionUser.php';
 
-// This $forum bit can be made loads and loads better when
-// the planned syntactic sugar is there
-$topic = Topic::createDummy($_GET['id']);
-$correctTopic = $store->createEqualityCondition($topic);
+// NOTE: setId() is not public API! Should be changed when a proper replacement 
+// for this is added to the public API
+$topic = new Topic();
+$topic->setId($_GET['id']);
+$correctTopic = new \Good\Manners\Condition\EqualTo($topic);
 $resolver = Topic::resolver();
 $resolver->resolveForum();
-$topics = $store->getTopicCollection($correctTopic, $resolver);
+$topics = $storage->getCollection($correctTopic, $resolver);
 
 if ($fullTopic = $topics->getNext())
 {
-	$goodLooking->registerVar('topic', parseTopic($fullTopic));
+	$goodLooking->registerVar('topic', $fullTopic);
 }
 
 $post = new Post();
 $post->setTopic($topic);
-$postsInTopic = $store->createEqualityCondition($post);
+$postsInTopic = new \Good\Manners\Condition\EqualTo($post);
 
 $resolver = Post::resolver();
 $resolver->resolvePoster();
 $resolver->orderByTimePostedAsc();
 
-$posts = $store->getPostCollection($postsInTopic, $resolver);
+$posts = $storage->getCollection($postsInTopic, $resolver);
 
-$goodLooking->registerVar('posts', parsePostCollection($posts));
+$goodLooking->registerVar('posts', $posts);
 
 $goodLooking->display();
 
