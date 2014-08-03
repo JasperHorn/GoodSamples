@@ -8,9 +8,9 @@
 	</header>
 	<h2>Log in</h2>
 	
-	<: if (failedLogin) :>
+	<: if ($failedLogin): :>
 	  <p>Incorrect username/password combination. Please try again.</p>
-	<: end if :>
+	<: endif :>
 	
 	<form method='POST' action='doLogin.php'>
 	  <label for='username'>Username: </label><input type='text' name='username' />

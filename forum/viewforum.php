@@ -15,7 +15,11 @@ $fora = $storage->getCollection($correctForum, Forum::resolver());
 
 if ($fullForum = $fora->getNext())
 {
-	$goodLooking->registerVar('forum', parseForum($fullForum));
+	$goodLooking->registerVar('forum', $fullForum);
+    
+    // NOTE: hack because of lacking API
+    // should be removed when id becomes available as property
+    $goodLooking->registerVar('forumId', $fullForum->getId());
 }
 
 $topic = new Topic();
@@ -28,7 +32,17 @@ $resolver->orderByTimeLastMessageDesc();
 
 $topics = $storage->getCollection($topicsInForum, $resolver);
 
-$goodLooking->registerVar('topics', $topics);
+// NOTE: hack because of lacking API
+// should be removed when id becomes available as property
+// NOTE: hack because of lacking API
+// should be removed when time parsing can be handled inside GoodLooking
+$fixedTopics = array();
+while ($topic = $topics->getNext())
+{
+    $fixedTopics[] = array($topic->getId(), $topic, $topic->timeLastMessage->format("Y-m-d H:i:s"));
+}
+
+$goodLooking->registerVar('topics', $fixedTopics);
 
 $goodLooking->display();
 

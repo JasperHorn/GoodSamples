@@ -17,7 +17,16 @@ $notForbiddenForum = new \Good\Manners\Condition\NotEqualTo($forbiddenForum);
 
 
 $fora = $storage->getCollection($notForbiddenForum, Forum::resolver());
-$goodLooking->registerVar('fora', $fora);
+
+// NOTE: hack because of lacking API
+// should be removed when id becomes available as property
+$fixedFora = array();
+while ($forum = $fora->getNext())
+{
+    $fixedFora[] = array($forum->getId(), $forum);
+}
+
+$goodLooking->registerVar('fora', $fixedFora);
 
 
 $goodLooking->display();

@@ -18,6 +18,13 @@ $topics = $storage->getCollection($correctTopic, $resolver);
 if ($fullTopic = $topics->getNext())
 {
 	$goodLooking->registerVar('topic', $fullTopic);
+    
+    // NOTE: hack because of lacking API
+    // should be removed when id becomes available as property
+    $goodLooking->registerVar('topicId', $fullTopic->getId());
+    // NOTE: hack because of lacking API
+    // should be removed when id becomes available as property
+    $goodLooking->registerVar('topicForumId', $fullTopic->forum->getId());
 }
 
 $post = new Post();
@@ -30,7 +37,15 @@ $resolver->orderByTimePostedAsc();
 
 $posts = $storage->getCollection($postsInTopic, $resolver);
 
-$goodLooking->registerVar('posts', $posts);
+// NOTE: hack because of lacking API
+// should be removed when time parsing can be handled inside GoodLooking
+$fixedPosts = array();
+while ($post = $posts->getNext())
+{
+    $fixedPosts[] = array($post, $post->timePosted->format("Y-m-d H:i:s"));
+}
+
+$goodLooking->registerVar('posts', $fixedPosts);
 
 $goodLooking->display();
 

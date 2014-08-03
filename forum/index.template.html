@@ -5,17 +5,17 @@
   <body>
     <header>
 	  <h1><a href='.'>The Good Suite Sample Forum</a></h1>
-	  <: if (loggedIn) :>
-		<p>Hello <: username :>. <a href='logout.php'>Log out.</a></p>
-	  <: else :>
+	  <: if ($loggedIn): :>
+		<p>Hello <: $username :>. <a href='logout.php'>Log out.</a></p>
+	  <: else: :>
 	    <a href='login.php'>Log in</a>
-	  <: end if :>
+	  <: endif :>
 	</header>
     
-	<: foreach (forum in fora) :>
+	<: foreach ($fora as $forum): :>
 	  <div>
-	    <a href='viewforum.php?id=<: forum["id"] :>'><: forum['name'] :></a>
+	    <a href='viewforum.php?id=<: $forum[0] :>'><: $forum[1]->name :></a>
       </div>
-	<: end foreach :>
+	<: endforeach :>
   </body>
 </html>

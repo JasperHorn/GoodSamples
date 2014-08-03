@@ -1,34 +1,34 @@
 <html>
   <head>
-    <title><: forum['name'] :> :: The Good Suite Sample Forum</title>
+    <title><: $forum->name :> :: The Good Suite Sample Forum</title>
   </head>
   <body>
     <header>
 	  <h1><a href='.'>The Good Suite Sample Forum</a></h1>
-	  <: if (loggedIn) :>
-		<p>Hello <: username :>. <a href='logout.php'>Log out.</a></p>
-	  <: else :>
+	  <: if ($loggedIn): :>
+		<p>Hello <: $username :>. <a href='logout.php'>Log out.</a></p>
+	  <: else: :>
 	    <a href='login.php'>Log in</a>
-	  <: end if :>
+	  <: endif :>
 	</header>
-	<h2><: forum['name'] :></h2>
+	<h2><: $forum->name :></h2>
 	
-	<: foreach (topic in topics) :>
+	<: foreach ($topics as $topic): :>
 	  <div>
-	    <a href='viewtopic.php?id=<: topic['id'] :>'><: topic['title'] :></a> -- by 
-				<: topic['topicStarter']['username'] :>, last message: <: topic['timeLastMessage'] :>
+	    <a href='viewtopic.php?id=<: $topic[0] :>'><: $topic[1]->title :></a> -- by 
+				<: $topic[1]->topicStarter->username :>, last message: <: $topic[2] :>
 	  </div>
-	<: end foreach :>
+	<: endforeach :>
 	
-	<: if (loggedIn) :>
+	<: if ($loggedIn): :>
 	  <form method="POST" action='posttopic.php'>
 	    <h3>Start a new topic</h3>
 		<label for='title'>Title: </label><input type='text' name='title' />
 	    <textarea name='message'></textarea>
-		<input type='hidden' name='forum' value='<: forum['id'] :>' />
+		<input type='hidden' name='forum' value='<: $forumId :>' />
 		<input type='submit' value='Post!' />
 	  </form>
-	<: end if :>
+	<: endif :>
 	
   </body>
 </html>
