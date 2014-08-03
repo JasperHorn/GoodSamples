@@ -9,31 +9,25 @@
 //  and handled by the system itself as well.)
 
 require 'settings.php';
+include ($good_dir . 'autoload.php');
 
 date_default_timezone_set($timezone);
 
-include($good_dir . 'autoload.php');
+$service = new \Good\Service\Service();
+$storage = new \Good\Memory\SQLStorage(new \Good\Memory\Database\MySQL($dbname, $dbhost, $dbport, $dbuser, $dbpass, ''));
 
-$good = new \Good\Good();
+// include generated datatype classes
+require_once 'compiled/Forum.datatype.php';
+require_once 'compiled/Topic.datatype.php';
+require_once 'compiled/Post.datatype.php';
+require_once 'compiled/User.datatype.php';
 
-require_once $compiled_dir . 'Store.php';
-require_once $compiled_dir . 'SQLStore.php';
-require_once $compiled_dir . 'LookingWithManners.php';
+// ** register Storable subclasses here    ** //
 
-foreach ($datatypes as $datatype)
-{
-	require_once $compiled_dir . 'Base' . ucfirst($datatype) . '.datatype.php';
-}
-
-// ** include Storable subclasses here    ** //
-
-require_once 'DataSubClasses/User.php';
+require_once 'DataSubClasses/MyUser.php';
+$storage->registerType('User', 'MyUser');
 
 // ** end of included Storable subclasses **//
 
-$service = new \Good\Service\Service();
-$service->requireClasses($datatypes);
-
-$store = new GoodMemorySQLStore(new \Good\Memory\Database\MySQL($dbname, $dbhost, $dbport, $dbuser, $dbpass, ''));
 
 ?>

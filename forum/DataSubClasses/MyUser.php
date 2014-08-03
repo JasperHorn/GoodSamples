@@ -1,6 +1,6 @@
 <?php
 
-class User extends BaseUser
+class MyUser extends User
 {
 	public function __construct()
 	{
