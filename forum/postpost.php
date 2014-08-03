@@ -38,6 +38,8 @@ if ($fullTopic = $topics->getNext())
 	$fullTopic->setTimeLastMessage($now);
 }
 
+$storage->flush();
+
 $_GET['id'] = $_POST['topic'];
 require 'viewtopic.php';
 
