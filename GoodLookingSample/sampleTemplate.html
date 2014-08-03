@@ -47,20 +47,20 @@
 
 <html>
 <head>
-<title>Page's Name - <:title:></title>
+<title>Page's Name - <:$title:></title>
 </head>
 <body>
-<h1><:title:></h1>
+<h1><:$title:></h1>
 
-<:if (logged_in):>
-	<p>Welcome <:name <:- This is the user's name (just trying out a comment within code tags -:>:></p>
-<:else:>
-	<: if (<:- currently ! is not supported (while != is), so Icomment it out here !--:>loginpage):>
+<:if ($logged_in): :>
+	<p>Welcome <:$name <:- This is the user's name (just trying out a comment within code tags -:>:></p>
+<:else::>
+	<: if (<:- currently ! is not supported (while != is), so Icomment it out here !--:>$loginpage)::>
 	<:- if we're on the loginpage already, there's no need to display an additional message -:>
 		<p>Welcome, guest. Please register or log in</p>
 		<:- We do ask people to please register or log in, but we do not restrict them if they don't -:>
-	<:end if:>
-<:end if:>
+	<:endif:>
+<:endif:>
 
 <:-
 I haven't made the menu file yet, so it is commented out -- fictional :P
@@ -71,9 +71,9 @@ I haven't made the menu file yet, so it is commented out -- fictional :P
 <:- Seriously, just <i>what</i> was I thinking? -:>
 <:- Just like included files should be allowed to use tags again -:>
 <:- Sure, they should, but they are not like variables in the least bit -:>
-<p><:mainText:></p>
+<p><:$mainText:></p>
 
-<:foreach(newspaper in newspapers):>
+<:foreach($newspapers as $newspaper)::>
 	<table border="1">
 	
 	<:- nameForCounter is a function that binds a name to a counter that keeps
@@ -81,25 +81,25 @@ I haven't made the menu file yet, so it is commented out -- fictional :P
 	
 	<:- Functions are not yet supported <:nameForCounter(newspaperNumber):> -:>
 	
-	<:foreach (article in newspaper):>
+	<:foreach ($newspaper as $article)::>
 		<tr>
-		<td><:article['name']:></td>
-		<td><:article['date']; ' - '; article['time']:></td>
+		<td><:$article['name']:></td>
+		<td><:$article['date']; ' - '; $article['time']:></td>
 		<:- and we're gonna cheat a little :D -:>
-		<td>views: <: 10 + article['viewCount']:></td>
+		<td>views: <: 10 + $article['viewCount']:></td>
 		
 		<td>
-		<:foreach (review in article['reviews']):>
-			<a href='<:review[0]:>'><img src='<:review[1]:>' />
-			<:review[2]:></a><br />
-		<:end foreach:>
+		<:foreach ($article['reviews'] as $review): :>
+			<a href='<:$review[0]:>'><img src='<:$review[1]:>' />
+			<:$review[2]:></a><br />
+		<:endforeach:>
 		</td>
 		
 		<:- if the price is 2 or lower it should be displayed in red - so gets the redPrice class,
 		    otherwise it gets the price class. I know multiclassing would be a better solution to the
 			problem, but that was not what I wanted to show - remember this a sample <i>template</i> -:>
 			
-		<td class='<:if (article['price'] <= 2):>redPrice<:else:>price<:end if:>'>&euro;<:article['price']:></td>
+		<td class='<:if ($article['price'] <= 2)::>redPrice<:else::>price<:endif:>'>&euro;<:$article['price']:></td>
 		
 		<:- if a buy-now link is present, put it in, otherwise, refer to newspaper site
 			this displays both the use of multidimentional arrays (they have been used before, but only with
@@ -111,27 +111,27 @@ I haven't made the menu file yet, so it is commented out -- fictional :P
 			
 			it's not exactly elegant, but then again I am trying to achieve the limits of my system here -:>
 		
-		<td><:if (article['buy-now']['present'] == true); 
-			     article['buy-now']['link'];
-			  else; 
+		<td><:if ($article['buy-now']['present'] == true): 
+			     $article['buy-now']['link'];
+			  else: 
 				 <:- we do not have newspapernumber at this moment, because functions
 				     are not yet supported, thus I made up some alternative to what's below:
 					 newspaperLinks[newspaperNames[newspaperNumber]]; -:>
 				 "Buy-now not present!";
-			  end if; :></td>
+			  endif; :></td>
 			
 		</tr>
-	<:end foreach:>
+	<:endforeach:>
 	
 	</table>
-<:end foreach:>
+<:endforeach:>
 
-<:for(1 --> ourFriendsCount) :>
+<:forrange(1 --> $ourFriendsCount): :>
 	<img src='friend.jpg' />
-<:end for:>
+<:endforrange:>
 
-<:if (insertFooter == true && footer != "randomFooter"):>
+<:if ($insertFooter == true && $footer != "randomFooter")::>
 	<:<:- functions are not supported right now include(-:>'footer.html'<:-)-:>:>
-<:end if:>
+<:endif:>
 
 </html>
